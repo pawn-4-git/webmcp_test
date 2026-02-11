@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WireFree Max - ノイズキャンセリングヘッドホン</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --light-gray: #f4f4f4;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .product-container {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .product-image {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .product-details {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product-category {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        h1.product-name {
+            margin: 0 0 1rem 0;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-description {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: flex-start;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #333;
+        }
+
+        .reviews-section {
+            background-color: var(--white);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 1rem;
+        }
+
+        .rating-summary {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .stars {
+            color: #f1c40f;
+            margin-right: 1rem;
+        }
+
+        .review-card {
+            border-bottom: 1px solid var(--light-gray);
+            padding: 1.5rem 0;
+        }
+
+        .review-card:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #f1c40f;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-content {
+            color: #444;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+            }
+            
+            .product-image, .product-details {
+                padding: 1.5rem;
+            }
+
+            h1.product-name {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h3 style="margin:0;">TechLife Store</h3>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section class="product-container">
+            <div class="product-image">
+                <img src="product_image.png" alt="WireFree Max Headphones" id="main-image">
+            </div>
+            <div class="product-details">
+                <span class="product-category">Audio</span>
+                <h1 class="product-name" id="product-name">WireFree Max</h1>
+                <div class="product-price" id="product-price">¥29,800</div>
+                <p class="product-description" id="product-description">
+                    究極の没入感を提供するWireFree Max。業界最高クラスのノイズキャンセリング機能、最大30時間の再生時間、そして比類なき快適さを実現するプレミアムイヤーパッド。音楽、映画、そして通話。すべてを鮮明に。
+                </p>
+                <button class="add-to-cart-btn" id="add-to-cart">カートに入れる</button>
+            </div>
+        </section>
+
+        <section class="reviews-section">
+            <h2>カスタマーレビュー</h2>
+            
+            <div class="rating-summary">
+                <div class="stars">★★★★☆</div>
+                <span id="average-rating">4.5 / 5.0 (3件のレビュー)</span>
+            </div>
+
+            <div class="review-list">
+                
+                <div class="review-card" data-review-id="1">
+                    <div class="review-header">
+                        <span class="reviewer-name">田中 健太</span>
+                        <span class="review-date">2023年10月15日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        音質が素晴らしいです。ノイズキャンセリングも強力で、電車の中でも音楽に集中できます。バッテリーの持ちも文句なしです。
+                    </div>
+                </div>
+
+                <div class="review-card" data-review-id="2">
+                    <div class="review-header">
+                        <span class="reviewer-name">鈴木 美咲</span>
+                        <span class="review-date">2023年11月2日</span>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-content">
+                        デザインがかっこいいです。長時間つけていても耳が痛くなりません。ただ、ケースが少し大きいかなと感じました。
+                    </div>
+                </div>
+
+                <div class="review-card" data-review-id="3">
+                    <div class="review-header">
+                        <span class="reviewer-name">佐藤 一郎</span>
+                        <span class="review-date">2023年12月10日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        ペアリングがとてもスムーズでした。マイクの音質も良く、Web会議でも問題なく使えています。この価格でこのクオリティは満足です。
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
