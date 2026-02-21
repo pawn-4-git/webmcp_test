@@ -221,6 +221,22 @@
                 <span id="average-rating">3.4 / 5.0 (26件のレビュー)</span>
             </div>
 
+            <form class="sort-controls" toolname="sortReviews" tooldescription="レビュー一覧を指定した順序に並び替えます"
+                style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center;">
+                <label for="sort-select"
+                    style="margin-right: 0.5rem; display: flex; align-items: center; font-weight: bold;">並び替え:</label>
+                <select id="sort-select" name="sortValue"
+                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;"
+                    title="ソート順序を選択してください">
+                    <option value="default">標準</option>
+                    <option value="newest">新しい順</option>
+                    <option value="oldest">古い順</option>
+                    <option value="highest">評価が高い順</option>
+                    <option value="lowest">評価が低い順</option>
+                </select>
+                <button type="submit" style="display: none;">並び替え実行</button>
+            </form>
+
             <div class="review-list">
 
                 <div class="review-card" data-review-id="1">
@@ -256,268 +272,346 @@
                     </div>
                 </div>
 
-            </div>
+                <div class="review-card" data-review-id="4">
+                    <div class="review-header">
+                        <span class="reviewer-name">佐々木 健治</span>
+                        <span class="review-date">2024年1月5日</span>
+                    </div>
+                    <div class="review-rating">★☆☆☆☆</div>
+                    <div class="review-content">
+                        全然ダメ。届いたその日に充電できなくなりました。サポートの対応も遅く、非常に残念です。
+                    </div>
+                </div>
 
-            <div class="review-card" data-review-id="4">
-                <div class="review-header">
-                    <span class="reviewer-name">佐々木 健治</span>
-                    <span class="review-date">2024年1月5日</span>
+                <div class="review-card" data-review-id="5">
+                    <div class="review-header">
+                        <span class="reviewer-name">山田 花子</span>
+                        <span class="review-date">2024年2月10日</span>
+                    </div>
+                    <div class="review-rating">★★☆☆☆</div>
+                    <div class="review-content">
+                        期待ほどではなかったです。音質は普通ですが、長時間つけていると耳が痛くなります。私の耳には合わなかったようです。
+                    </div>
                 </div>
-                <div class="review-rating">★☆☆☆☆</div>
-                <div class="review-content">
-                    全然ダメ。届いたその日に充電できなくなりました。サポートの対応も遅く、非常に残念です。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="5">
-                <div class="review-header">
-                    <span class="reviewer-name">山田 花子</span>
-                    <span class="review-date">2024年2月10日</span>
+                <div class="review-card" data-review-id="6">
+                    <div class="review-header">
+                        <span class="reviewer-name">中村 大輔</span>
+                        <span class="review-date">2024年3月20日</span>
+                    </div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-content">
+                        普通です。価格相応かなと思います。ノイズキャンセリングはそこそこ効きますが、完全に静寂になるわけではありません。
+                    </div>
                 </div>
-                <div class="review-rating">★★☆☆☆</div>
-                <div class="review-content">
-                    期待ほどではなかったです。音質は普通ですが、長時間つけていると耳が痛くなります。私の耳には合わなかったようです。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="6">
-                <div class="review-header">
-                    <span class="reviewer-name">中村 大輔</span>
-                    <span class="review-date">2024年3月20日</span>
+                <div class="review-card" data-review-id="7">
+                    <div class="review-header">
+                        <span class="reviewer-name">佐藤 翔太</span>
+                        <span class="review-date">2024年3月25日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        最高のヘッドホンです。毎日使っています。ノイズキャンセリングの効きが素晴らしい。
+                    </div>
                 </div>
-                <div class="review-rating">★★★☆☆</div>
-                <div class="review-content">
-                    普通です。価格相応かなと思います。ノイズキャンセリングはそこそこ効きますが、完全に静寂になるわけではありません。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="7">
-                <div class="review-header">
-                    <span class="reviewer-name">佐藤 翔太</span>
-                    <span class="review-date">2024年3月25日</span>
+                <div class="review-card" data-review-id="8">
+                    <div class="review-header">
+                        <span class="reviewer-name">高橋 優子</span>
+                        <span class="review-date">2024年3月22日</span>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-content">
+                        音はいいけど、少し重いかも。長時間は疲れるかもしれません。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★★</div>
-                <div class="review-content">
-                    最高のヘッドホンです。毎日使っています。ノイズキャンセリングの効きが素晴らしい。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="8">
-                <div class="review-header">
-                    <span class="reviewer-name">高橋 優子</span>
-                    <span class="review-date">2024年3月22日</span>
+                <div class="review-card" data-review-id="9">
+                    <div class="review-header">
+                        <span class="reviewer-name">渡辺 剛</span>
+                        <span class="review-date">2024年3月18日</span>
+                    </div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-content">
+                        普通。値段の割には...という感じです。過度な期待は禁物。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★☆</div>
-                <div class="review-content">
-                    音はいいけど、少し重いかも。長時間は疲れるかもしれません。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="9">
-                <div class="review-header">
-                    <span class="reviewer-name">渡辺 剛</span>
-                    <span class="review-date">2024年3月18日</span>
+                <div class="review-card" data-review-id="10">
+                    <div class="review-header">
+                        <span class="reviewer-name">伊藤 真理</span>
+                        <span class="review-date">2024年3月15日</span>
+                    </div>
+                    <div class="review-rating">★★☆☆☆</div>
+                    <div class="review-content">
+                        接続がたまに切れます。ファームウェアアップデートで直ることを期待します。
+                    </div>
                 </div>
-                <div class="review-rating">★★★☆☆</div>
-                <div class="review-content">
-                    普通。値段の割には...という感じです。過度な期待は禁物。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="10">
-                <div class="review-header">
-                    <span class="reviewer-name">伊藤 真理</span>
-                    <span class="review-date">2024年3月15日</span>
+                <div class="review-card" data-review-id="11">
+                    <div class="review-header">
+                        <span class="reviewer-name">山本 健一</span>
+                        <span class="review-date">2024年3月10日</span>
+                    </div>
+                    <div class="review-rating">★☆☆☆☆</div>
+                    <div class="review-content">
+                        すぐ壊れました。最悪。サポートに連絡しても繋がらない。
+                    </div>
                 </div>
-                <div class="review-rating">★★☆☆☆</div>
-                <div class="review-content">
-                    接続がたまに切れます。ファームウェアアップデートで直ることを期待します。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="11">
-                <div class="review-header">
-                    <span class="reviewer-name">山本 健一</span>
-                    <span class="review-date">2024年3月10日</span>
+                <div class="review-card" data-review-id="12">
+                    <div class="review-header">
+                        <span class="reviewer-name">中村 美咲</span>
+                        <span class="review-date">2024年3月5日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        ノイキャンがすごい！集中できます。カフェでの作業に最適です。
+                    </div>
                 </div>
-                <div class="review-rating">★☆☆☆☆</div>
-                <div class="review-content">
-                    すぐ壊れました。最悪。サポートに連絡しても繋がらない。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="12">
-                <div class="review-header">
-                    <span class="reviewer-name">中村 美咲</span>
-                    <span class="review-date">2024年3月5日</span>
+                <div class="review-card" data-review-id="13">
+                    <div class="review-header">
+                        <span class="reviewer-name">小林 大輔</span>
+                        <span class="review-date">2024年3月1日</span>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-content">
+                        概ね満足。色がもっとあればよかった。ブラック以外も欲しい。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★★</div>
-                <div class="review-content">
-                    ノイキャンがすごい！集中できます。カフェでの作業に最適です。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="13">
-                <div class="review-header">
-                    <span class="reviewer-name">小林 大輔</span>
-                    <span class="review-date">2024年3月1日</span>
+                <div class="review-card" data-review-id="14">
+                    <div class="review-header">
+                        <span class="reviewer-name">加藤 さくら</span>
+                        <span class="review-date">2024年2月28日</span>
+                    </div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-content">
+                        イヤーパッドが蒸れる。夏場はきついかも。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★☆</div>
-                <div class="review-content">
-                    概ね満足。色がもっとあればよかった。ブラック以外も欲しい。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="14">
-                <div class="review-header">
-                    <span class="reviewer-name">加藤 さくら</span>
-                    <span class="review-date">2024年2月28日</span>
+                <div class="review-card" data-review-id="15">
+                    <div class="review-header">
+                        <span class="reviewer-name">吉田 拓也</span>
+                        <span class="review-date">2024年2月25日</span>
+                    </div>
+                    <div class="review-rating">★★☆☆☆</div>
+                    <div class="review-content">
+                        操作性が悪い。ボタンが押しにくい位置にあります。
+                    </div>
                 </div>
-                <div class="review-rating">★★★☆☆</div>
-                <div class="review-content">
-                    イヤーパッドが蒸れる。夏場はきついかも。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="15">
-                <div class="review-header">
-                    <span class="reviewer-name">吉田 拓也</span>
-                    <span class="review-date">2024年2月25日</span>
+                <div class="review-card" data-review-id="16">
+                    <div class="review-header">
+                        <span class="reviewer-name">山田 太郎</span>
+                        <span class="review-date">2024年2月20日</span>
+                    </div>
+                    <div class="review-rating">★☆☆☆☆</div>
+                    <div class="review-content">
+                        初期不良でした。交換手続きが面倒で時間がかかりました。
+                    </div>
                 </div>
-                <div class="review-rating">★★☆☆☆</div>
-                <div class="review-content">
-                    操作性が悪い。ボタンが押しにくい位置にあります。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="16">
-                <div class="review-header">
-                    <span class="reviewer-name">山田 太郎</span>
-                    <span class="review-date">2024年2月20日</span>
+                <div class="review-card" data-review-id="17">
+                    <div class="review-header">
+                        <span class="reviewer-name">斎藤 結衣</span>
+                        <span class="review-date">2024年2月15日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        デザインがおしゃれで気に入ってます。ファッションアイテムとしても優秀。
+                    </div>
                 </div>
-                <div class="review-rating">★☆☆☆☆</div>
-                <div class="review-content">
-                    初期不良でした。交換手続きが面倒で時間がかかりました。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="17">
-                <div class="review-header">
-                    <span class="reviewer-name">斎藤 結衣</span>
-                    <span class="review-date">2024年2月15日</span>
+                <div class="review-card" data-review-id="18">
+                    <div class="review-header">
+                        <span class="reviewer-name">井上 陽介</span>
+                        <span class="review-date">2024年2月10日</span>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-content">
+                        通話品質が良い。テレワークに最適。相手の声もクリアに聞こえます。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★★</div>
-                <div class="review-content">
-                    デザインがおしゃれで気に入ってます。ファッションアイテムとしても優秀。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="18">
-                <div class="review-header">
-                    <span class="reviewer-name">井上 陽介</span>
-                    <span class="review-date">2024年2月10日</span>
+                <div class="review-card" data-review-id="19">
+                    <div class="review-header">
+                        <span class="reviewer-name">木村 遥</span>
+                        <span class="review-date">2024年2月5日</span>
+                    </div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-content">
+                        低音が物足りない気がする。バスブースト機能が欲しいです。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★☆</div>
-                <div class="review-content">
-                    通話品質が良い。テレワークに最適。相手の声もクリアに聞こえます。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="19">
-                <div class="review-header">
-                    <span class="reviewer-name">木村 遥</span>
-                    <span class="review-date">2024年2月5日</span>
+                <div class="review-card" data-review-id="20">
+                    <div class="review-header">
+                        <span class="reviewer-name">林 修身</span>
+                        <span class="review-date">2024年1月30日</span>
+                    </div>
+                    <div class="review-rating">★★☆☆☆</div>
+                    <div class="review-content">
+                        説明書がわかりにくい。ペアリングに苦戦しました。
+                    </div>
                 </div>
-                <div class="review-rating">★★★☆☆</div>
-                <div class="review-content">
-                    低音が物足りない気がする。バスブースト機能が欲しいです。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="20">
-                <div class="review-header">
-                    <span class="reviewer-name">林 修身</span>
-                    <span class="review-date">2024年1月30日</span>
+                <div class="review-card" data-review-id="21">
+                    <div class="review-header">
+                        <span class="reviewer-name">清水 綾</span>
+                        <span class="review-date">2024年1月25日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        プレゼント用に買いました。喜ばれました。ラッピングも可愛かったです。
+                    </div>
                 </div>
-                <div class="review-rating">★★☆☆☆</div>
-                <div class="review-content">
-                    説明書がわかりにくい。ペアリングに苦戦しました。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="21">
-                <div class="review-header">
-                    <span class="reviewer-name">清水 綾</span>
-                    <span class="review-date">2024年1月25日</span>
+                <div class="review-card" data-review-id="22">
+                    <div class="review-header">
+                        <span class="reviewer-name">山口 達也</span>
+                        <span class="review-date">2024年1月20日</span>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-content">
+                        コスパはいいと思う。この値段でこの機能なら納得。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★★</div>
-                <div class="review-content">
-                    プレゼント用に買いました。喜ばれました。ラッピングも可愛かったです。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="22">
-                <div class="review-header">
-                    <span class="reviewer-name">山口 達也</span>
-                    <span class="review-date">2024年1月20日</span>
+                <div class="review-card" data-review-id="23">
+                    <div class="review-header">
+                        <span class="reviewer-name">松本 香織</span>
+                        <span class="review-date">2024年1月15日</span>
+                    </div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-content">
+                        充電時間が長い。急速充電に対応してほしかった。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★☆</div>
-                <div class="review-content">
-                    コスパはいいと思う。この値段でこの機能なら納得。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="23">
-                <div class="review-header">
-                    <span class="reviewer-name">松本 香織</span>
-                    <span class="review-date">2024年1月15日</span>
+                <div class="review-card" data-review-id="24">
+                    <div class="review-header">
+                        <span class="reviewer-name">岡田 準一</span>
+                        <span class="review-date">2024年1月10日</span>
+                    </div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-content">
+                        今までで一番いいヘッドホン。音の広がりが段違いです。
+                    </div>
                 </div>
-                <div class="review-rating">★★★☆☆</div>
-                <div class="review-content">
-                    充電時間が長い。急速充電に対応してほしかった。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="24">
-                <div class="review-header">
-                    <span class="reviewer-name">岡田 準一</span>
-                    <span class="review-date">2024年1月10日</span>
+                <div class="review-card" data-review-id="25">
+                    <div class="review-header">
+                        <span class="reviewer-name">野村 沙織</span>
+                        <span class="review-date">2024年1月5日</span>
+                    </div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-content">
+                        装着感がいい。疲れにくい。メガネをかけていても痛くなりません。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★★</div>
-                <div class="review-content">
-                    今までで一番いいヘッドホン。音の広がりが段違いです。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="25">
-                <div class="review-header">
-                    <span class="reviewer-name">野村 沙織</span>
-                    <span class="review-date">2024年1月5日</span>
+                <div class="review-card" data-review-id="26">
+                    <div class="review-header">
+                        <span class="reviewer-name">藤田 誠</span>
+                        <span class="review-date">2024年1月1日</span>
+                    </div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-content">
+                        配送が遅かった。年末年始だから仕方ないけど、もう少し早く欲しかった。
+                    </div>
                 </div>
-                <div class="review-rating">★★★★☆</div>
-                <div class="review-content">
-                    装着感がいい。疲れにくい。メガネをかけていても痛くなりません。
-                </div>
-            </div>
 
-            <div class="review-card" data-review-id="26">
-                <div class="review-header">
-                    <span class="reviewer-name">藤田 誠</span>
-                    <span class="review-date">2024年1月1日</span>
-                </div>
-                <div class="review-rating">★★★☆☆</div>
-                <div class="review-content">
-                    配送が遅かった。年末年始だから仕方ないけど、もう少し早く欲しかった。
-                </div>
             </div>
-
-    </div>
-    </section>
+        </section>
 
     </div>
 
 
     <script src="webmcp-api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sortSelect = document.getElementById('sort-select');
+            const reviewList = document.querySelector('.review-list');
+            const reviewCards = Array.from(document.querySelectorAll('.review-card'));
+
+            // 星の文字列を数値に変換する関数
+            const getRatingValue = (starString) => {
+                return (starString.match(/★/g) || []).length;
+            };
+
+            // 日付文字列をタイムスタンプに変換する関数
+            const getDateValue = (dateString) => {
+                const match = dateString.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+                if (match) {
+                    return new Date(match[1], match[2] - 1, match[3]).getTime();
+                }
+                return 0;
+            };
+
+            // 初期状態の順序
+            const defaultOrder = [...reviewCards];
+
+            const executeSort = (sortValue) => {
+                let sortedCards = [...reviewCards];
+
+                if (sortValue === 'newest') {
+                    sortedCards.sort((a, b) => {
+                        const dateA = getDateValue(a.querySelector('.review-date').textContent);
+                        const dateB = getDateValue(b.querySelector('.review-date').textContent);
+                        return dateB - dateA;
+                    });
+                } else if (sortValue === 'oldest') {
+                    sortedCards.sort((a, b) => {
+                        const dateA = getDateValue(a.querySelector('.review-date').textContent);
+                        const dateB = getDateValue(b.querySelector('.review-date').textContent);
+                        return dateA - dateB;
+                    });
+                } else if (sortValue === 'highest') {
+                    sortedCards.sort((a, b) => {
+                        const ratingA = getRatingValue(a.querySelector('.review-rating').textContent);
+                        const ratingB = getRatingValue(b.querySelector('.review-rating').textContent);
+                        return ratingB - ratingA;
+                    });
+                } else if (sortValue === 'lowest') {
+                    sortedCards.sort((a, b) => {
+                        const ratingA = getRatingValue(a.querySelector('.review-rating').textContent);
+                        const ratingB = getRatingValue(b.querySelector('.review-rating').textContent);
+                        return ratingA - ratingB;
+                    });
+                } else {
+                    sortedCards = [...defaultOrder];
+                }
+
+                // DOMを更新
+                reviewList.innerHTML = '';
+                sortedCards.forEach(card => reviewList.appendChild(card));
+            };
+
+            // ユーザーによる手動変更時の処理
+            sortSelect.addEventListener('change', (e) => {
+                executeSort(e.target.value);
+            });
+
+            // WebMCP APIからのフォーム送信（ボタンクリックなどのトリガー）対応
+            const sortForm = document.querySelector('.sort-controls');
+            if (sortForm) {
+                sortForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // ページのリロードを防ぐ
+                    const formData = new FormData(sortForm);
+                    const sortValue = formData.get('sortValue');
+
+                    if (sortValue) {
+                        sortSelect.value = sortValue; // セレクトボックスの表示も更新
+                        executeSort(sortValue);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
