@@ -179,6 +179,68 @@
             color: #444;
         }
 
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .floating-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 768px) {
             .product-container {
                 flex-direction: column;
@@ -232,8 +294,13 @@
 
             <form class="sort-controls" toolname="sortReviews" tooldescription="レビュー一覧を指定した順序に並び替えます"
                 style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center;">
-                <label for="sort-select"
-                    style="margin-right: 0.5rem; display: flex; align-items: center; font-weight: bold;">並び替え:</label>
+                <span id="webmcp-info-trigger"
+                    style="margin-right: 0.5rem; display: flex; align-items: center; font-weight: bold; cursor: pointer; color: var(--accent-color); transition: opacity 0.3s;"
+                    onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">
+                    並び替え(Declarative API実装)
+                    <span
+                        style="display: inline-flex; align-items: center; justify-content: center; width: 1.2rem; height: 1.2rem; background-color: var(--accent-color); color: var(--white); border-radius: 50%; font-size: 0.8rem; margin-left: 0.3rem;">?</span>
+                </span>
                 <select id="sort-select" name="sortValue"
                     style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;"
                     title="ソート順序を選択してください">
@@ -539,6 +606,116 @@
 
     </div>
 
+    <!-- Javascript WebMCP Overlay Modal -->
+    <div class="modal-overlay" id="js-webmcp-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="js-webmcp-modal-close">&times;</button>
+            <h2 style="margin-top: 0; border-bottom: none; padding-bottom: 0; color: var(--primary-color);">
+                JavascriptでのWebMCP(Imperative API)実装</h2>
+            <hr style="border: none; border-top: 2px solid var(--light-gray); margin-bottom: 1.5rem;">
+            <p style="margin-bottom: 1rem;"><code>webmcp-api.js</code> では、JavaScriptを使用してレビューデータを抽出するWebMCPのツールを実装しています。
+            </p>
+
+            <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">主な実装内容 (getProductReviews):</h4>
+            <ul style="color: #444; line-height: 1.6; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                <li><code>window.navigator.modelContext</code> を使用して、モック環境を初期化しています。</li>
+                <li><code>getProductReviews</code>
+                    という名前のツールを定義し、ページ上の各レビュー項目（名前、評価、日付、コメントなど）のDOM操作を行い、AIが取得可能なJSON形式で返却する処理を実装しています。</li>
+                <li>作成したツールを <code>window.navigator.modelContext.registerTool()</code>
+                    を用いて登録し、外部のAIクライアントから呼び出せるようにしています。</li>
+            </ul>
+
+            <div
+                style="background: #f8f9fa; padding: 1rem; border-radius: 4px; border: 1px solid #e9ecef; margin-bottom: 1rem; overflow-x: auto;">
+                <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: #555;">JavaScriptでの実装例:</h4>
+                <code
+                    style="display: block; white-space: pre-wrap; font-family: monospace; color: #20c997; font-size: 0.9em; tab-size: 4;">// ツールの定義
+const getProductReviewsTool = {
+    name: "getProductReviews",
+    description: "Retrieve customer names, ratings, dates, and review comments from the product page.",
+    // 入出力スキーマ定義
+    inputSchema: {
+        type: "object",
+        properties: {
+            limit: {
+                type: "integer",
+                description: "The maximum number of reviews to return. Optional."
+            }
+        }
+    },
+    outputSchema: {
+        type: "object",
+        properties: {
+            content: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        type: { type: "string" },
+                        text: { type: "string" }
+                    }
+                }
+            }
+        }
+    },
+    // 実行ロジック
+    execute: async function (params) {
+        // DOMからレビュー情報を取得
+        const reviews = [];
+        const reviewCards = document.querySelectorAll('.review-card');
+        
+        // ... (抽出処理と整形) ...
+
+        return {
+            content: [{
+                type: "text",
+                text: JSON.stringify(reviews, null, 2)
+            }]
+        };
+    }
+};
+
+// ツールの登録
+if (window.navigator.modelContext) {
+    window.navigator.modelContext.registerTool(getProductReviewsTool);
+}</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Trigger Button -->
+    <div class="floating-button" id="js-webmcp-trigger">
+        JavascriptでWebMCPを実装する(Imperative API)場合はこちら
+    </div>
+
+    <script src="webmcp-api.js"></script>
+    <div class="modal-overlay" id="webmcp-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="webmcp-modal-close">&times;</button>
+            <h2 style="margin-top: 0; border-bottom: none; padding-bottom: 0; color: var(--primary-color);">WebMCP
+                (Declarative API)実装内容
+            </h2>
+            <hr style="border: none; border-top: 2px solid var(--light-gray); margin-bottom: 1.5rem;">
+            <p style="margin-bottom: 1rem;">この「並び替え」機能は、WebMCPのツール機能を使用して外部のAIエージェントに公開されています。</p>
+            <div
+                style="background: #f8f9fa; padding: 1rem; border-radius: 4px; border: 1px solid #e9ecef; margin-bottom: 1rem; overflow-x: auto;">
+                <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: #555;">HTMLフォームによる定義:</h4>
+                <code
+                    style="display: block; white-space: pre-wrap; font-family: monospace; color: #d63384; font-size: 0.95em;">&lt;form toolname="sortReviews" tooldescription="レビュー一覧を指定した順序に並び替えます"&gt;
+    ...
+    &lt;select name="sortValue"&gt;
+        &lt;option value="default"&gt;標準&lt;/option&gt;
+        ...
+    &lt;/select&gt;
+&lt;/form&gt;</code>
+            </div>
+            <p style="color: #444; line-height: 1.6;">
+                フォームに <code>toolname</code>（ツール名）と
+                <code>tooldescription</code>（ツールの説明）属性を定義することで、WebMCPクライアントがこれを認識し、自動的にAIが呼び出せる「関数」として登録します。<br><br>
+                AIがこの関数を実行すると、自動的にフォームの <code>submit</code> イベントが発火し、ページ内で定義されたJavaScriptのソート処理が実行される仕組みになっています。
+            </p>
+        </div>
+    </div>
 
     <script src="webmcp-api.js"></script>
     <script>
@@ -616,6 +793,48 @@
                     if (sortValue) {
                         sortSelect.value = sortValue; // セレクトボックスの表示も更新
                         executeSort(sortValue);
+                    }
+                });
+            }
+
+            // WebMCP Modal logic
+            const infoTrigger = document.getElementById('webmcp-info-trigger');
+            const modal = document.getElementById('webmcp-modal');
+            const modalClose = document.getElementById('webmcp-modal-close');
+
+            if (infoTrigger && modal && modalClose) {
+                infoTrigger.addEventListener('click', () => {
+                    modal.classList.add('active');
+                });
+
+                modalClose.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            }
+
+            // JavaScript WebMCP Modal logic
+            const jsInfoTrigger = document.getElementById('js-webmcp-trigger');
+            const jsModal = document.getElementById('js-webmcp-modal');
+            const jsModalClose = document.getElementById('js-webmcp-modal-close');
+
+            if (jsInfoTrigger && jsModal && jsModalClose) {
+                jsInfoTrigger.addEventListener('click', () => {
+                    jsModal.classList.add('active');
+                });
+
+                jsModalClose.addEventListener('click', () => {
+                    jsModal.classList.remove('active');
+                });
+
+                jsModal.addEventListener('click', (e) => {
+                    if (e.target === jsModal) {
+                        jsModal.classList.remove('active');
                     }
                 });
             }
