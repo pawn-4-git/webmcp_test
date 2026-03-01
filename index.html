@@ -292,26 +292,37 @@
                 <span id="average-rating">3.4 / 5.0 (26件のレビュー)</span>
             </div>
 
-            <form class="sort-controls" toolname="sortReviews" tooldescription="レビュー一覧を指定した順序に並び替えます"
-                style="margin-bottom: 2rem; display: flex; justify-content: flex-end; align-items: center;">
-                <span id="webmcp-info-trigger"
-                    style="margin-right: 0.5rem; display: flex; align-items: center; font-weight: bold; cursor: pointer; color: var(--accent-color); transition: opacity 0.3s;"
-                    onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">
-                    並び替え(Declarative API実装)
-                    <span
-                        style="display: inline-flex; align-items: center; justify-content: center; width: 1.2rem; height: 1.2rem; background-color: var(--accent-color); color: var(--white); border-radius: 50%; font-size: 0.8rem; margin-left: 0.3rem;">?</span>
-                </span>
-                <select id="sort-select" name="sortValue"
-                    style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;"
-                    title="ソート順序を選択してください">
-                    <option value="default">標準</option>
-                    <option value="newest">新しい順</option>
-                    <option value="oldest">古い順</option>
-                    <option value="highest">評価が高い順</option>
-                    <option value="lowest">評価が低い順</option>
-                </select>
-                <button type="submit" style="display: none;">並び替え実行</button>
-            </form>
+            <div
+                style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <form class="search-controls" toolname="searchReviews" tooldescription="レビューをキーワードで検索・絞り込みます"
+                    style="display: flex; align-items: center;">
+                    <input type="text" id="search-input" name="keyword" placeholder="レビューを検索..."
+                        style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333; margin-right: 0.5rem; width: 250px;">
+                    <button type="submit"
+                        style="padding: 0.5rem 1rem; background-color: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">検索</button>
+                </form>
+
+                <form class="sort-controls" toolname="sortReviews" tooldescription="レビュー一覧を指定した順序に並び替えます"
+                    style="display: flex; align-items: center;">
+                    <span id="webmcp-info-trigger"
+                        style="margin-right: 0.5rem; display: flex; align-items: center; font-weight: bold; cursor: pointer; color: var(--accent-color); transition: opacity 0.3s;"
+                        onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1">
+                        並び替え(Declarative API実装)
+                        <span
+                            style="display: inline-flex; align-items: center; justify-content: center; width: 1.2rem; height: 1.2rem; background-color: var(--accent-color); color: var(--white); border-radius: 50%; font-size: 0.8rem; margin-left: 0.3rem;">?</span>
+                    </span>
+                    <select id="sort-select" name="sortValue"
+                        style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; color: #333;"
+                        title="ソート順序を選択してください">
+                        <option value="default">標準</option>
+                        <option value="newest">新しい順</option>
+                        <option value="oldest">古い順</option>
+                        <option value="highest">評価が高い順</option>
+                        <option value="lowest">評価が低い順</option>
+                    </select>
+                    <button type="submit" style="display: none;">並び替え実行</button>
+                </form>
+            </div>
 
             <div class="review-list">
 
@@ -741,58 +752,102 @@ if (window.navigator.modelContext) {
             // 初期状態の順序
             const defaultOrder = [...reviewCards];
 
-            const executeSort = (sortValue) => {
-                let sortedCards = [...reviewCards];
+            // 状態
+            let currentSort = 'default';
+            let currentKeyword = '';
 
-                if (sortValue === 'newest') {
-                    sortedCards.sort((a, b) => {
+            const executeFiltersAndSort = () => {
+                let displayCards = [...defaultOrder];
+
+                // 絞り込み (Filtering)
+                if (currentKeyword) {
+                    const lowerKeyword = currentKeyword.toLowerCase();
+                    displayCards = displayCards.filter(card => {
+                        const content = card.querySelector('.review-content').textContent.toLowerCase();
+                        const name = card.querySelector('.reviewer-name').textContent.toLowerCase();
+                        return content.includes(lowerKeyword) || name.includes(lowerKeyword);
+                    });
+                }
+
+                // 並び替え (Sorting)
+                if (currentSort === 'newest') {
+                    displayCards.sort((a, b) => {
                         const dateA = getDateValue(a.querySelector('.review-date').textContent);
                         const dateB = getDateValue(b.querySelector('.review-date').textContent);
                         return dateB - dateA;
                     });
-                } else if (sortValue === 'oldest') {
-                    sortedCards.sort((a, b) => {
+                } else if (currentSort === 'oldest') {
+                    displayCards.sort((a, b) => {
                         const dateA = getDateValue(a.querySelector('.review-date').textContent);
                         const dateB = getDateValue(b.querySelector('.review-date').textContent);
                         return dateA - dateB;
                     });
-                } else if (sortValue === 'highest') {
-                    sortedCards.sort((a, b) => {
+                } else if (currentSort === 'highest') {
+                    displayCards.sort((a, b) => {
                         const ratingA = getRatingValue(a.querySelector('.review-rating').textContent);
                         const ratingB = getRatingValue(b.querySelector('.review-rating').textContent);
                         return ratingB - ratingA;
                     });
-                } else if (sortValue === 'lowest') {
-                    sortedCards.sort((a, b) => {
+                } else if (currentSort === 'lowest') {
+                    displayCards.sort((a, b) => {
                         const ratingA = getRatingValue(a.querySelector('.review-rating').textContent);
                         const ratingB = getRatingValue(b.querySelector('.review-rating').textContent);
                         return ratingA - ratingB;
                     });
-                } else {
-                    sortedCards = [...defaultOrder];
                 }
 
                 // DOMを更新
                 reviewList.innerHTML = '';
-                sortedCards.forEach(card => reviewList.appendChild(card));
+                if (displayCards.length === 0) {
+                    reviewList.innerHTML = '<p style="text-align: center; color: #777; padding: 2rem 0;">該当するレビューが見つかりませんでした。</p>';
+                } else {
+                    displayCards.forEach(card => reviewList.appendChild(card));
+                }
             };
 
-            // ユーザーによる手動変更時の処理
+            // ユーザーによる並び替え手動変更時の処理
             sortSelect.addEventListener('change', (e) => {
-                executeSort(e.target.value);
+                currentSort = e.target.value;
+                executeFiltersAndSort();
             });
 
-            // WebMCP APIからのフォーム送信（ボタンクリックなどのトリガー）対応
+            // ユーザーによる検索入力時の処理
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    currentKeyword = e.target.value;
+                    executeFiltersAndSort();
+                });
+            }
+
+            // WebMCP APIからのソートフォーム送信対応
             const sortForm = document.querySelector('.sort-controls');
             if (sortForm) {
                 sortForm.addEventListener('submit', (e) => {
-                    e.preventDefault(); // ページのリロードを防ぐ
+                    e.preventDefault();
                     const formData = new FormData(sortForm);
                     const sortValue = formData.get('sortValue');
 
                     if (sortValue) {
-                        sortSelect.value = sortValue; // セレクトボックスの表示も更新
-                        executeSort(sortValue);
+                        sortSelect.value = sortValue;
+                        currentSort = sortValue;
+                        executeFiltersAndSort();
+                    }
+                });
+            }
+
+            // WebMCP APIからの検索フォーム送信対応
+            const searchForm = document.querySelector('.search-controls');
+            if (searchForm) {
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(searchForm);
+                    const keyword = formData.get('keyword');
+
+                    if (keyword !== null) {
+                        searchInput.value = keyword;
+                        currentKeyword = keyword;
+                        executeFiltersAndSort();
                     }
                 });
             }
