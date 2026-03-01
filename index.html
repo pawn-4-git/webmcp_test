@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WebMCP（Model Context Protocol）の仕組みを解説・体験するためのデモ用サンプルページです。">
     <title>WebMCP サンプルページ - WireFree Max</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PK7T4RG91R"></script>
@@ -61,6 +62,23 @@
             align-items: center;
             justify-content: center;
             background-color: #fff;
+            position: relative;
+        }
+
+        .sample-banner {
+            position: absolute;
+            top: 2.5rem;
+            left: -5rem;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.5rem 6.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            transform: rotate(-45deg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            text-align: center;
         }
 
         .product-image img {
@@ -261,15 +279,19 @@
 <body>
 
     <header>
-        <div class="container">
+        <div class="container"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <h3 style="margin:0;">WebMCP サンプルページ</h3>
+            <a href="https://qiita.com/ho-rai/items/443a037674ec028b1524" target="_blank" rel="noopener noreferrer"
+                style="color: var(--accent-color); text-decoration: none; font-weight: bold;">WebMCPの仕組みについて</a>
         </div>
     </header>
 
     <div class="container">
 
-        <section class="product-container">
+        <section class="product-container" style="overflow: hidden; max-width: 100%;">
             <div class="product-image">
+                <div class="sample-banner">SAMPLE</div>
                 <img src="product_image.png" alt="WireFree Max Headphones" id="main-image">
             </div>
             <div class="product-details">
@@ -280,7 +302,10 @@
                     究極の没入感を提供するWireFree
                     Max。業界最高クラスのノイズキャンセリング機能、最大30時間の再生時間、そして比類なき快適さを実現するプレミアムイヤーパッド。音楽、映画、そして通話。すべてを鮮明に。
                 </p>
-                <button class="add-to-cart-btn" id="add-to-cart">カートに入れる</button>
+                <form class="add-to-cart-controls" toolname="addToCart" tooldescription="商品をカートに入れます"
+                    style="margin: 0;">
+                    <button type="submit" class="add-to-cart-btn" id="add-to-cart">カートに入れる</button>
+                </form>
             </div>
         </section>
 
@@ -617,6 +642,17 @@
 
     </div>
 
+    <!-- Add to Cart Modal -->
+    <div class="modal-overlay" id="cart-modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <button class="modal-close" id="cart-modal-close">&times;</button>
+            <div style="font-size: 3rem; color: #2ecc71; margin-bottom: 1rem;">&#10004;</div>
+            <h2 style="margin-top: 0; border-bottom: none; padding-bottom: 0; color: var(--primary-color);">完了</h2>
+            <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #555;">カートに入れました（サンプルページ）</p>
+            <button class="add-to-cart-btn" id="cart-modal-ok" style="align-self: center; width: 100%;">OK</button>
+        </div>
+    </div>
+
     <!-- Javascript WebMCP Overlay Modal -->
     <div class="modal-overlay" id="js-webmcp-modal">
         <div class="modal-content">
@@ -848,6 +884,35 @@ if (window.navigator.modelContext) {
                         searchInput.value = keyword;
                         currentKeyword = keyword;
                         executeFiltersAndSort();
+                    }
+                });
+            }
+
+            // WebMCP APIからのカート追加フォーム対応
+            const cartForm = document.querySelector('.add-to-cart-controls');
+            const cartModal = document.getElementById('cart-modal');
+            const cartModalClose = document.getElementById('cart-modal-close');
+            const cartModalOk = document.getElementById('cart-modal-ok');
+
+            const showCartModal = () => {
+                cartModal.classList.add('active');
+            };
+
+            const closeCartModal = () => {
+                cartModal.classList.remove('active');
+            };
+
+            if (cartForm && cartModal) {
+                cartForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // ページリロードを防ぐ
+                    showCartModal();
+                });
+
+                if (cartModalClose) cartModalClose.addEventListener('click', closeCartModal);
+                if (cartModalOk) cartModalOk.addEventListener('click', closeCartModal);
+                cartModal.addEventListener('click', (e) => {
+                    if (e.target === cartModal) {
+                        closeCartModal();
                     }
                 });
             }
