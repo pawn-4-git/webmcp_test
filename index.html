@@ -302,10 +302,7 @@
                     究極の没入感を提供するWireFree
                     Max。業界最高クラスのノイズキャンセリング機能、最大30時間の再生時間、そして比類なき快適さを実現するプレミアムイヤーパッド。音楽、映画、そして通話。すべてを鮮明に。
                 </p>
-                <form class="add-to-cart-controls" toolname="addToCart" tooldescription="商品をカートに入れます"
-                    style="margin: 0;">
-                    <button type="submit" class="add-to-cart-btn" id="add-to-cart">カートに入れる</button>
-                </form>
+                <button class="add-to-cart-btn" id="add-to-cart">カートに入れる</button>
             </div>
         </section>
 
@@ -888,8 +885,8 @@ if (window.navigator.modelContext) {
                 });
             }
 
-            // WebMCP APIからのカート追加フォーム対応
-            const cartForm = document.querySelector('.add-to-cart-controls');
+            // カート追加ボタンの対応
+            const addToCartBtn = document.getElementById('add-to-cart');
             const cartModal = document.getElementById('cart-modal');
             const cartModalClose = document.getElementById('cart-modal-close');
             const cartModalOk = document.getElementById('cart-modal-ok');
@@ -902,9 +899,8 @@ if (window.navigator.modelContext) {
                 cartModal.classList.remove('active');
             };
 
-            if (cartForm && cartModal) {
-                cartForm.addEventListener('submit', (e) => {
-                    e.preventDefault(); // ページリロードを防ぐ
+            if (addToCartBtn && cartModal) {
+                addToCartBtn.addEventListener('click', () => {
                     showCartModal();
                 });
 

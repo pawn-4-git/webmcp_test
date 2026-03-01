@@ -113,9 +113,34 @@
         }
     };
 
-    // Register the tool
+    // Define the tool for adding items to cart
+    const addToCartTool = {
+        name: "addToCart",
+        description: "商品をカートに入れます",
+        inputSchema: {
+            type: "object",
+            properties: {} // 引数なし
+        },
+        execute: async function (params) {
+            // DOMを通じてモーダルを表示させるためのイベントを発火するか、直接DOM操作
+            const cartModal = document.getElementById('cart-modal');
+            if (cartModal) {
+                cartModal.classList.add('active');
+            }
+
+            return {
+                content: [{
+                    type: "text",
+                    text: "カートに入れました"
+                }]
+            };
+        }
+    };
+
+    // Register the tools
     if (window.navigator.modelContext) {
         window.navigator.modelContext.registerTool(getProductReviewsTool);
+        window.navigator.modelContext.registerTool(addToCartTool);
     }
 
 })();
